@@ -1,3 +1,10 @@
+# Vamos ao que interessa
+
+Este é um projeto realizado em PHP e CodeIgniter 4, apenas acadêmico.
+O projeto apresenta um cadastro de noticias, utilizando estilos do bootstrap.
+
+Abaixo segue documentação do CodeIgniter 4
+
 # CodeIgniter 4 Application Starter
 
 ## What is CodeIgniter?
