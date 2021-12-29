@@ -22,5 +22,68 @@ class Noticias extends Controller{
       
     }
 
+    public function item($id = NULL){
+      
+        $model = new NoticiasModel();
+
+        $data['noticias'] = $model->getNoticias($id);
+        // Trata erro caso não tenha registro
+        if(empty($data['noticias'])){
+            throw new \CodeIgniter\Exceptions\PageNotFoundException('Não é possivel localizar a notícia com id:'.$id);
+        }
+
+        //Monta pagina
+        $data['title'] = $data['noticias']['titulo'];
+
+        echo view('templates/header',$data);
+        echo view('pages/noticia',$data);
+        echo view('templates/footer');
+      
+    }
+
+    // Metodo Inserir
+    public function inserir(){
+     
+        //Helper form - validação de formulario
+        helper('form');
+        //Monta pagina
+        $data['title'] = 'Inserir Notícia';
+
+        echo view('templates/header',$data);
+        echo view('pages/noticia_gravar');
+        echo view('templates/footer');
+      
+    }
+
+    public function gravar(){
+  
+        helper('form');
+  
+        $model = new NoticiasModel();
+
+        //valida campos do funcionario
+        if($this->validate([
+            'titulo'   => ['label' => 'Título'   ,'rules'=>'required|min_length[3]|max_length[100]'],
+            'autor'    => ['label' => 'Autor'    ,'rules'=>'required|min_length[3]|max_length[100]'],
+            'descricao'=> ['label' => 'Descrição','rules'=>'required|min_length[3]']
+        ])){
+            //gravar
+            $model->save([
+                'id' => $this->request->getVar('id'),
+                'titulo'=> $this->request->getVar('titulo'),
+                'autor'=> $this->request->getVar('autor'),
+                'descricao'=> $this->request->getVar('descricao'),
+            ]);
+            
+            return redirect('noticias');
+
+        } else {
+            $data['title'] = "Erro ao gravar a notícia";
+            echo view('templates/header',$data);
+            echo view('pages/noticia_gravar');
+            echo view('templates/footer');
     
+        }
+    }
+
 }

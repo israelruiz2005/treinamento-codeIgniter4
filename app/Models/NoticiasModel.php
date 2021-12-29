@@ -20,7 +20,7 @@ class NoticiasModel extends Model {
         } else {
 
             return $this->asArray()
-                        ->where([id=> $id])
+                        ->where(['id'=> $id])
                         ->first();
 
         }
