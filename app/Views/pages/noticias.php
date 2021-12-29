@@ -7,9 +7,9 @@
                     <p><?=$noticias_item['descricao']?></p>
                 </div>
                 <div class="card-footer">
-                    <a href="" class= "btn btn-sucess">Saiba mais</a>
-                    <a href="" class= "btn btn-warning">Editar</a>
-                    <a href="" class= "btn btn-danger">Excuir</a>
+                    <a href="#" class= "btn btn-success">Saiba mais</a>
+                    <a href="#" class= "btn btn-warning">Editar</a>
+                    <a href="#" class= "btn btn-danger">Excuir</a>
                 </div>
 
             </div>
