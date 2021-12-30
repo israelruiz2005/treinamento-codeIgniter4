@@ -112,15 +112,53 @@ class Noticias extends Controller{
             'autor'    => ['label' => 'Autor'    ,'rules'=>'required|min_length[3]|max_length[100]'],
             'descricao'=> ['label' => 'Descrição','rules'=>'required|min_length[3]']
         ])){
-            //gravar
-            $model->save([
-                'id' => $this->request->getVar('id'),
-                'titulo'=> $this->request->getVar('titulo'),
-                'autor'=> $this->request->getVar('autor'),
-                'descricao'=> $this->request->getVar('descricao'),
-            ]);
+            //Variaveis
+            $id        = $this->request->getVar('id');
+            $titulo    = $this->request->getVar('titulo');
+            $autor     = $this->request->getVar('autor');
+            $descricao = $this->request->getVar('descricao');
+            $img       = $this->request->getFile('img');
             
-            return redirect('noticias');
+            // Teste para verificar img
+            if(!$img->isValid()){
+                //gravar
+                $model->save([
+                    'id' => $id,
+                    'titulo'=> $titulo,
+                    'autor'=> $autor,
+                    'descricao'=> $descricao,
+                ]);
+                return redirect('noticias');
+            } else {
+                 $validaIMG = $this->validate([
+                     'img'   => [
+                                'uploaded[img]',
+                                'mime_in[img,image/png,image/jpg,image/jpeg,image/gif]',
+                                'max_size[img,4096]',
+                                ],
+                    ]);
+                 if($validaIMG){
+                     $novoNome = $img->getRandomName();
+                     $img->move('img/noticias',$novoNome);
+
+                                     //gravar
+                $model->save([
+                    'id' => $id,
+                    'titulo'=> $titulo,
+                    'autor'=> $autor,
+                    'descricao'=> $descricao,
+                    'img' => $novoNome,
+                ]);
+                    return redirect('noticias');
+                 } else {
+                    $data['title'] = "Erro ao gravar a notícia";
+                    echo view('templates/header',$data);
+                    echo view('pages/noticia_gravar');
+                    echo view('templates/footer');
+        
+                 }      
+            }
+            
 
         } else {
             $data['title'] = "Erro ao gravar a notícia";

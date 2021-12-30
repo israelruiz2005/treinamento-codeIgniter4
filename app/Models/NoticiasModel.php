@@ -7,7 +7,7 @@ class NoticiasModel extends Model {
     // Atributos de configuração
     protected $table = "noticias"; //obrigatorio
     protected $primaryKey = 'id'; //colocar o nome da primary key
-    protected $allowedFields = ['titulo','descricao','autor']; // os campos editaveis
+    protected $allowedFields = ['titulo','descricao','autor','img']; // os campos editaveis
 
     //CONFIGURA SOFT DELETE
     protected $useSoftDeletes = true;

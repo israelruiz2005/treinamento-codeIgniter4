@@ -3,7 +3,7 @@
         <?= \Config\Services::validation()->listErrors();?>
     </div>
 
-    <form action="<?='/noticias/gravar'?>" method="post" > 
+    <form action="<?='/noticias/gravar'?>" method="post" enctype="multipart/form-data"> 
         <div class="form-group">
             <label for="titulo">Título</label>
             <input type="text" class="form-control" name="titulo" 
@@ -20,8 +20,14 @@
             <?= isset($noticias['descricao']) ? $noticias['descricao'] : set_value('descricao') ?>
             </textarea>
         </div>
+        <div class="form-group">
+            <label for="img"></label></br>
+            <input type="file" class="form-control-file" name="img">
+        </div>
+
         <input type="hidden" name="id" 
         value="<?= isset($noticias['id']) ? $noticias['id'] : set_value('id') ?>">
+        </br>
         <input type="submit" name="submit" class="btn btn-primary" value="Salvar"/>
     </form>
 </div>
