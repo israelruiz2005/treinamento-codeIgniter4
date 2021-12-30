@@ -55,6 +55,27 @@ class Noticias extends Controller{
       
     }
 
+    public function editar($id = NULL){
+      
+        $model = new NoticiasModel();
+
+        $data= [
+               'title' => 'Editar notícias',
+               'noticias' => $model->getNoticias($id)
+        ];
+        // Trata erro caso não tenha registro
+        if(empty($data['noticias'])){
+            throw new \CodeIgniter\Exceptions\PageNotFoundException('Não é possivel localizar a notícia com id:'.$id);
+        }
+
+        //Monta pagina
+
+        echo view('templates/header',$data);
+        echo view('pages/noticia_gravar',$data);
+        echo view('templates/footer');
+      
+    }
+
     public function gravar(){
   
         helper('form');
@@ -84,6 +105,15 @@ class Noticias extends Controller{
             echo view('templates/footer');
     
         }
+
+    }
+
+    //Excluir
+    public function excluir($id = NULL){
+
+        $model = new NoticiasModel();
+        $model->delete($id);
+        return redirect('noticias');
     }
 
 }

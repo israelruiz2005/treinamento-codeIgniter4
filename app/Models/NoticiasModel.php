@@ -9,6 +9,14 @@ class NoticiasModel extends Model {
     protected $primaryKey = 'id'; //colocar o nome da primary key
     protected $allowedFields = ['titulo','descricao','autor']; // os campos editaveis
 
+    //CONFIGURA SOFT DELETE
+    protected $useSoftDeletes = true;
+    protected $useTimestamps = true;
+    protected $dateFormat ='datetime';
+    protected $createdField = 'created_at';
+    protected $updatedField = 'updated_at';
+    protected $deletedField = 'deleted_at';
+    
     //Metodos a serem criados
     //Metodo GET
     public function getNoticias($id = false){

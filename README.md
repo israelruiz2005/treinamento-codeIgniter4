@@ -3,7 +3,52 @@
 Este é um projeto realizado em PHP e CodeIgniter 4, apenas acadêmico.
 O projeto apresenta um cadastro de noticias, utilizando estilos do bootstrap.
 
+Temos um CRUD de noticias com deleção segura, ou seja uma aplicação que realiza as operações básicas num banco de dados
+
+## CRUD (Create, Read, Update, Delete) 
+
+É um acrônimo para as maneiras de se operar em informação armazenada. É um mnemônico para as quatro operações básicas de armazenamento persistente.
+- C - criação ou inclusão
+- R - Read ou leitura/pesquisa
+- U - update ou Alteração
+- D - Deleção ou exclusão
+
+## Configuração Soft Delete
+
+Permite apagar os registros, porém apenas marca como deletado no banco de dados, para isso será realizar a seguintes configurações no Model da aplicação:
+
+```shell
+  //CONFIGURA SOFT DELETE
+    protected $useSoftDeletes = true;
+    protected $useTimestamps = true;
+    protected $dateFormat ='datetime';
+    protected $createdField = 'created_at'; //Qualquer nome 
+    protected $updatedField = 'updated_at';
+    protected $deletedField = 'deleted_at';
+```
+Os tres campos criados 'xxx_at' podem ter qualquer nome, devem existir no banco de dados com o mesmo mome, ou seja, se colocar o nome 'deletado_em' no banco de dados deve existir um campo 'deletado_em'.
+
+## Migrates e Seeds
+
+Para criar as tabelas e popular com registros podemos utilizar os comandos 'migrate' e 'db:seed' conforme abaixo:
+
+Estando no prompt de comando já com os arquivos de migrates criados digite:
+
+```shell
+php spark migrate
+```
+
+Para popular a tabela com alguns registros :
+
+```shell
+php spark db:seed nome_do_arquivo_seed
+```
+
+
+
 Abaixo segue documentação do CodeIgniter 4
+
+
 
 # CodeIgniter 4 Application Starter
 
