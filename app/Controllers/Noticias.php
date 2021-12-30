@@ -8,10 +8,11 @@ class Noticias extends Controller{
     public function index(){
       
         $model = new NoticiasModel();
-
+        //Verifica se há uma sessão em execução para o usuário
         $data = [
                     'title' => 'Ultimas noticias',
-                    'noticias' => $model->getNoticias()
+                    'noticias' => $model->getNoticias(),
+                    'session' => \Config\Services::session(),
         ];
 
         //Monta pagina
@@ -25,6 +26,8 @@ class Noticias extends Controller{
     public function item($id = NULL){
       
         $model = new NoticiasModel();
+        //Verifica se há uma sessão em execução para o usuário
+        $data['session'] = \Config\Services::session();
 
         $data['noticias'] = $model->getNoticias($id);
         // Trata erro caso não tenha registro
@@ -43,7 +46,13 @@ class Noticias extends Controller{
 
     // Metodo Inserir
     public function inserir(){
-     
+        //Verifica se há uma sessão em execução para o usuário
+        $data['session'] = \Config\Services::session();
+
+        if(!$data['session']->get('logged_in')){
+            return redirect('login');
+        }
+
         //Helper form - validação de formulario
         helper('form');
         //Monta pagina
@@ -61,8 +70,15 @@ class Noticias extends Controller{
 
         $data= [
                'title' => 'Editar notícias',
-               'noticias' => $model->getNoticias($id)
+               'noticias' => $model->getNoticias($id),
+               'session' => \Config\Services::session(),
         ];
+
+        //Verifica se há uma sessão em execução para o usuário
+        if(!$data['session']->get('logged_in')){
+            return redirect('login');
+        }
+        
         // Trata erro caso não tenha registro
         if(empty($data['noticias'])){
             throw new \CodeIgniter\Exceptions\PageNotFoundException('Não é possivel localizar a notícia com id:'.$id);
@@ -77,7 +93,15 @@ class Noticias extends Controller{
     }
 
     public function gravar(){
+
+        //Verifica se há uma sessão em execução para o usuário
+          $data['session'] = \Config\Services::session();
+
+          if(!$data['session']->get('logged_in')){
+              return redirect('login');
+          }
   
+
         helper('form');
   
         $model = new NoticiasModel();
@@ -110,6 +134,13 @@ class Noticias extends Controller{
 
     //Excluir
     public function excluir($id = NULL){
+
+        //Verifica se há uma sessão em execução para o usuário
+        $data['session'] = \Config\Services::session();
+
+        if(!$data['session']->get('logged_in')){
+            return redirect('login');
+        }
 
         $model = new NoticiasModel();
         $model->delete($id);
